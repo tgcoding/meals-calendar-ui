@@ -1,0 +1,3 @@
+app/external/*
+node_modules/*
+dist/*
