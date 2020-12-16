@@ -9,10 +9,11 @@ class Navigation extends Component {
     render() {
         return (
             <nav className="navbar navbar-expand navbar-dark bg-dark">
-                <a className="navbar-brand" href="./">What ToDo</a>
+                <a className="navbar-brand" href="./">MealsCalendar</a>
                 <div className="navbar-collapse" id="navbarsExampleDefault">
                     <ul className="navbar-nav mr-auto">
                         <ListItemLink to="./">Dashboard</ListItemLink>
+                        <ListItemLink to="./history">New Meal</ListItemLink>
                         <ListItemLink to="./calendar">Calendar</ListItemLink>
                     </ul>
                 </div>
