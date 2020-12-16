@@ -1,6 +1,6 @@
 class EnvConstants {
     static get API_PATH() {
-        const envUrl = "http://localhost:8080";
+        const envUrl = "http://localhost";
         const path = "/meals-calendar/api";
         return envUrl + path;
     }
