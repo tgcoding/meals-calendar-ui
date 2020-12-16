@@ -11,7 +11,7 @@ class MealHistory extends Component {
             mealDate: moment(),
             name: "",
             mealTime: 0,
-            calories: 0,
+            calories: "",
             redirect: false,
         };
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -27,7 +27,7 @@ class MealHistory extends Component {
 
     handleInputChange(event) {
         const { value, name } = event.target;
-        if (name === "mealTime" || name === "calories") {
+        if (name === "mealTime") {
             this.setState({
                 [name]: parseInt(value, 10),
             });
@@ -42,7 +42,8 @@ class MealHistory extends Component {
         event.preventDefault();
         const mealHistory = { ...this.state };
         mealHistory.user = { id: 1 };
-        mealHistory.mealDate = mealHistory.mealDate.toDate();
+        mealHistory.calories = parseInt(mealHistory.calories.trim(), 10);
+        mealHistory.mealDate = mealHistory.mealDate.format("YYYY-MM-DD");
 
         const response = await HttpUtils.post("/mealhistory/", mealHistory)
             .catch(error => {
