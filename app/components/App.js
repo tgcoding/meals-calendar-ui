@@ -15,7 +15,12 @@ class App extends Component {
                 <div>
                     <Navigation />
                     <div className="container mt-5">
-                        <h1>Meals Calendar</h1>
+                        <div className="col-md-12">
+                            <h1 className="d-inline">Meals Calendar</h1>
+                            <div className="float-right">
+                                <Link to="/history"><button className="btn btn-primary ml-2">New</button></Link>
+                            </div>
+                        </div>
                         <Route exact={true} path="/" render={() => (
                             <div className="row mt-5">
                                 <div className="col-md-12">
