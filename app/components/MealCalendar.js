@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import HttpUtils from "../util/HttpUtils";
+import MealHistory from "./MealHistory";
 
 class MealCalendar extends Component {
     constructor(props) {
@@ -8,6 +9,8 @@ class MealCalendar extends Component {
             data: {},
         };
         this.getCalendarData = this.getCalendarData.bind(this);
+        this.onFinishEdit = this.onFinishEdit.bind(this);
+        this.editHistory = this.editHistory.bind(this);
     }
 
     componentDidMount() {
@@ -22,6 +25,21 @@ class MealCalendar extends Component {
         this.setState({
             data: response.data,
         });
+    }
+
+    editHistory(id) {
+        this.setState({
+            editing: true,
+            editingId: id,
+        });
+    }
+
+    onFinishEdit() {
+        this.setState({
+            editing: false,
+            editingId: 0,
+        });
+        this.getCalendarData();
     }
 
     render() {
@@ -41,6 +59,9 @@ class MealCalendar extends Component {
             height: "200px",
         };
 
+        if (this.state.editing) {
+            return(<MealHistory mealHistoryId={this.state.editingId} onEdit={this.onFinishEdit} />)
+        }
         return (
             <div className="m-5">
                 <div style={{ ...flexParent }}>
@@ -50,7 +71,7 @@ class MealCalendar extends Component {
                                 <h5 className="card-title">{key}</h5>
                                 <h6 className="card-subtitle mb-2 text-muted">{this.state.data[key].reduce((sum, current) => sum + current.calories, 0)} Calories</h6>
                                 {this.state.data[key].map(mealHistory => (
-                                    <div className="d-block" style={{ ...noWrap }} key={mealHistory.id}>
+                                    <div className="d-block" style={{ ...noWrap }} key={mealHistory.id} onClick={() => this.editHistory(mealHistory.id)}>
                                         {mealHistory.name}
                                     </div>
                                 ))}

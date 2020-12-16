@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 import HttpUtils from "../util/HttpUtils";
 
 class MealHistory extends Component {
@@ -17,6 +18,21 @@ class MealHistory extends Component {
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.addMealHistory = this.addMealHistory.bind(this);
+    }
+
+    async componentDidMount() {
+        if (this.props.mealHistoryId) {
+            const response = await HttpUtils.get(`/mealhistory/${this.props.mealHistoryId}`)
+                .catch((error) => {
+                    console.log(error);
+                });
+            if (response.data) {
+                response.data.mealDate = moment(response.data.mealDate);
+                this.setState({
+                    ...response.data,
+                });
+            }
+        }
     }
 
     handleDateChange(newDate) {
@@ -55,12 +71,20 @@ class MealHistory extends Component {
                 name: "",
                 mealTime: 0,
                 calories: 0,
-                redirect: true,
             });
+
+            if (this.props.onEdit) {
+                this.props.onEdit();
+            } else {
+                this.setState({
+                    redirect: true,
+                });
+            }
         }
     }
 
     render() {
+        const cancel = (this.props.mealHistoryId) ? (<button className="btn btn-danger" onClick={this.props.onEdit}>Cancel</button>) : null;
         if (this.state.redirect === true) {
             return (
                 <Redirect to={{ pathname: "/calendar", state: { from: "/mealhistory" } }} />
@@ -122,6 +146,7 @@ class MealHistory extends Component {
                 <div className="row mt-5">
                     <div className="col-md-12">
                         <div className="float-left">
+                            {cancel}
                             <button className="btn btn-primary ml-2" onClick={this.addMealHistory}>Submit</button>
                         </div>
                     </div>
@@ -130,5 +155,10 @@ class MealHistory extends Component {
         );
     }
 }
+
+MealHistory.propTypes = {
+    mealHistoryId: PropTypes.number,
+    onEdit: PropTypes.func,
+};
 
 export default MealHistory;
