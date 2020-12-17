@@ -1,5 +1,6 @@
 import axios from "axios";
 import EnvConstants from "../constants/EnvConstants";
+import TokenService from "../services/TokenService";
 
 class HttpUtils {
     static #config = { headers: {} };
@@ -8,6 +9,9 @@ class HttpUtils {
         let url = EnvConstants.API_PATH + endpoint;
 
         let config = { ...this.#config };
+        if(TokenService.tokenExists()) {
+            config.headers = {...config.headers, 'Authorization': 'Bearer ' + TokenService.getToken()}
+        }
         console.log("Config: ");
         console.log(config);
 
@@ -24,6 +28,9 @@ class HttpUtils {
         let url = EnvConstants.API_PATH + endpoint;
 
         let config = { ...this.#config };
+        if(TokenService.tokenExists()) {
+            config.headers = {...config.headers, 'Authorization': 'Bearer ' + TokenService.getToken()}
+        }
         console.log("Config: ");
         console.log(config);
 
@@ -39,6 +46,9 @@ class HttpUtils {
         let url = EnvConstants.API_PATH + endpoint;
 
         let config = { ...this.#config };
+        if(TokenService.tokenExists()) {
+            config.headers = {...config.headers, 'Authorization': 'Bearer ' + TokenService.getToken()}
+        }
         console.log("Config: ");
         console.log(config);
 
