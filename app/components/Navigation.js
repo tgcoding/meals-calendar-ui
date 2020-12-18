@@ -27,11 +27,11 @@ class Navigation extends Component {
                             <span className="mr-2 text-light">{this.props.user.email}</span>
                             <button className="btn btn-outline-danger my-2 my-sm-0" type="submit" onClick={this.logout}>Sign Out</button>
                         </div>
-                        ) : (
+                    ) : (
                         <div>
-                            <Link to={{pathname: "./login", state: { from: { pathname: "/" }}}}><button className="btn btn-outline-success my-2 my-sm-0" type="submit">Sign In</button></Link>
+                            <Link to={{ pathname: "./login", state: { from: { pathname: "/" } } }}><button className="btn btn-outline-success my-2 my-sm-0" type="submit">Sign In</button></Link>
                         </div>
-                        )
+                    )
                     }
                 </div>
             </nav>

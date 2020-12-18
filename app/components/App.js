@@ -13,7 +13,7 @@ import TokenService from "../services/TokenService";
 class App extends Component {
     constructor(props) {
         super(props);
-        let tokenExists = TokenService.tokenExists();
+        const tokenExists = TokenService.tokenExists();
         this.state = {
             currentUser: null,
             authenticated: tokenExists
@@ -23,40 +23,37 @@ class App extends Component {
         this.updateLoggedIn = this.updateLoggedIn.bind(this);
         this.updateLoggedOut = this.updateLoggedOut.bind(this);
         this.logOut = this.logOut.bind(this);
-        console.log("In App constructor");
         console.log(this.state.authenticated);
     }
-  
+
+    componentDidMount() {
+        this.loadCurrentlyLoggedInUser();
+    }
+
     loadCurrentlyLoggedInUser() {
-        console.log("In loadCurrentlyLoggedInUser");
         if (TokenService.tokenExists()) {
-            console.log("loadCurrentlyLoggedInUser token exists");
 
             UserService.getCurrentUser()
-                .then(response => {
-                    console.log("loadCurrentlyLoggedInUser token is valid");
+                .then((response) => {
                     this.setState({
                         currentUser: response.data,
                         authenticated: true
                     });
-                }).catch(error => {
-                    console.log("loadCurrentlyLoggedInUser token is bad");
+                }).catch((error) => {
                     if (error.response.status === 401) {
                         console.log("401 response");
                         this.updateLoggedOut();
                     }
                 });
         } else {
-            console.log("loadCurrentlyLoggedInUser token does not exist");
             this.setState({
                 currentUser: null,
                 authenticated: false
-            });  
+            });
         }
     }
 
     updateLoggedIn() {
-        console.log("Updating to logged in");
         this.setState({
             authenticated: true,
             currentUser: null
@@ -64,7 +61,6 @@ class App extends Component {
     }
 
     updateLoggedOut() {
-        console.log("Updating to logged out");
         this.setState({
             authenticated: false,
             currentUser: null
@@ -72,12 +68,7 @@ class App extends Component {
     }
 
     logOut() {
-        console.log("Redirecting to logout");
         window.location = EnvConstants.OAUTH_LOGOUT;
-    }
-  
-    componentDidMount() {
-        this.loadCurrentlyLoggedInUser();
     }
 
     render() {
@@ -108,8 +99,8 @@ class App extends Component {
                     </div>
                     <PrivateRoute path="/history" authenticated={this.state.authenticated} noAuthResponse={this.updateLoggedOut} component={MealHistory} />
                     <PrivateRoute path="/calendar" authenticated={this.state.authenticated} noAuthResponse={this.updateLoggedOut} component={MealCalendar} />
-                    <Route path='/login' component={(props) => { window.location = EnvConstants.GOOGLE_OAUTH_PATH + '&react_redirect_path=' + props.location.state.from.pathname; return null;} }/>
-                    <Route path="/oauth2/redirect" component={(props) => <OAuth2RedirectHandler {...props} updateAuth={this.updateLoggedIn} />} ></Route>
+                    <Route path="/login" component={(props) => { window.location = EnvConstants.GOOGLE_OAUTH_PATH + "&react_redirect_path=" + props.location.state.from.pathname; return null; }} />
+                    <Route path="/oauth2/redirect" component={(props) => <OAuth2RedirectHandler {...props} updateAuth={this.updateLoggedIn} />} />
                     <Route path="/logout" component={() => <LogoutHandler handleLogoutState={this.updateLoggedOut} loggedIn={this.state.authenticated} />} />
                 </div>
             </Router>

@@ -9,11 +9,9 @@ class HttpUtils {
         let url = EnvConstants.API_PATH + endpoint;
 
         let config = { ...this.#config };
-        if(TokenService.tokenExists()) {
-            config.headers = {...config.headers, 'Authorization': 'Bearer ' + TokenService.getToken()}
+        if (TokenService.tokenExists()) {
+            config.headers = { ...config.headers, Authorization: "Bearer " + TokenService.getToken() };
         }
-        console.log("Config: ");
-        console.log(config);
 
         if (external === true) {
             url = endpoint;
@@ -28,11 +26,9 @@ class HttpUtils {
         let url = EnvConstants.API_PATH + endpoint;
 
         let config = { ...this.#config };
-        if(TokenService.tokenExists()) {
-            config.headers = {...config.headers, 'Authorization': 'Bearer ' + TokenService.getToken()}
+        if (TokenService.tokenExists()) {
+            config.headers = { ...config.headers, Authorization: "Bearer " + TokenService.getToken() };
         }
-        console.log("Config: ");
-        console.log(config);
 
         if (external === true) {
             url = endpoint;
@@ -46,11 +42,9 @@ class HttpUtils {
         let url = EnvConstants.API_PATH + endpoint;
 
         let config = { ...this.#config };
-        if(TokenService.tokenExists()) {
-            config.headers = {...config.headers, 'Authorization': 'Bearer ' + TokenService.getToken()}
+        if (TokenService.tokenExists()) {
+            config.headers = { ...config.headers, Authorization: "Bearer " + TokenService.getToken() };
         }
-        console.log("Config: ");
-        console.log(config);
 
         if (external === true) {
             url = endpoint;

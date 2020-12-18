@@ -1,12 +1,12 @@
-import HttpUtils from "../util/HttpUtils"
+import HttpUtils from "../util/HttpUtils";
 import TokenService from "../services/TokenService";
 
 class UserService {
     static getCurrentUser() {
-        if(!TokenService.tokenExists()) {
-            return Promise.reject("No access token set.");
+        if (!TokenService.tokenExists()) {
+            return Promise.reject(new Error("No access token set."));
         }
-    
+
         return HttpUtils.get("/user/me");
     }
 }

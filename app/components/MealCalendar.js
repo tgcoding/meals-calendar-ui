@@ -60,7 +60,7 @@ class MealCalendar extends Component {
         };
 
         if (this.state.editing) {
-            return(<MealHistory mealHistoryId={this.state.editingId} onEdit={this.onFinishEdit} />)
+            return (<MealHistory mealHistoryId={this.state.editingId} onEdit={this.onFinishEdit} />);
         }
         return (
             <div className="m-5">
