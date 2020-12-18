@@ -1,12 +1,12 @@
 class EnvConstants {
     static get API_PATH() {
-        const envUrl = "http://localhost";
+        const envUrl = (this.ENV_MODE === "development") ? "http://localhost:8080" : "http://localhost";
         const path = "/meals-calendar/api";
         return envUrl + path;
     }
 
     static get OAUTH_REDIRECT() {
-        const envUrl = "http://localhost";
+        const envUrl = (this.ENV_MODE === "development") ? "http://localhost:9000" : "http://localhost";
         const path = "/meals-calendar/oauth2/redirect";
         return envUrl + path;
     }
@@ -19,6 +19,13 @@ class EnvConstants {
     static get OAUTH_LOGOUT() {
         const url = this.API_PATH + "/logout";
         return url;
+    }
+
+    static get ENV_MODE() {
+        if (process && process.env && process.env.NODE_ENV) {
+            return process.env.NODE_ENV;
+        }
+        return "";
     }
 }
 
