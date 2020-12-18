@@ -57,7 +57,6 @@ class MealHistory extends Component {
     async addMealHistory(event) {
         event.preventDefault();
         const mealHistory = { ...this.state };
-        mealHistory.user = { id: 1 };
         mealHistory.calories = parseInt(mealHistory.calories.trim(), 10);
         mealHistory.mealDate = mealHistory.mealDate.format("YYYY-MM-DD");
 
